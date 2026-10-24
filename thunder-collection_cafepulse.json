@@ -1,39 +1,39 @@
 {
   "clientName": "Thunder Client",
-  "collectionName": "CafePulse API",
+  "collectionName": "CafePulse API (Live Vercel)",
   "collectionId": "cafepulse-collection",
-  "dateExported": "2026-10-24T05:05:00.000Z",
+  "dateExported": "2026-10-24T05:55:00.000Z",
   "version": "1.1",
   "folders": [],
   "requests": [
     {
       "name": "1. Health Check",
       "method": "GET",
-      "url": "http://127.0.0.1:5000/",
+      "url": "https://cafepulse-api.vercel.app/",
       "headers": []
     },
     {
       "name": "2. Database Connection Check",
       "method": "GET",
-      "url": "http://127.0.0.1:5000/db-check",
+      "url": "https://cafepulse-api.vercel.app/db-check",
       "headers": []
     },
     {
       "name": "3. Get All Cafes",
       "method": "GET",
-      "url": "http://127.0.0.1:5000/api/cafes",
+      "url": "https://cafepulse-api.vercel.app/api/cafes",
       "headers": []
     },
     {
       "name": "4. Get Single Cafe by ID",
       "method": "GET",
-      "url": "http://127.0.0.1:5000/api/cafes/1",
+      "url": "https://cafepulse-api.vercel.app/api/cafes/1",
       "headers": []
     },
     {
       "name": "5. Create New Cafe",
       "method": "POST",
-      "url": "http://127.0.0.1:5000/api/cafes",
+      "url": "https://cafepulse-api.vercel.app/api/cafes",
       "headers": [
         {
           "name": "Content-Type",
@@ -48,7 +48,7 @@
     {
       "name": "6. Update Cafe",
       "method": "PUT",
-      "url": "http://127.0.0.1:5000/api/cafes/1",
+      "url": "https://cafepulse-api.vercel.app/api/cafes/1",
       "headers": [
         {
           "name": "Content-Type",
@@ -63,9 +63,8 @@
     {
       "name": "7. Delete Cafe",
       "method": "DELETE",
-      "url": "http://127.0.0.1:5000/api/cafes/1",
+      "url": "https://cafepulse-api.vercel.app/api/cafes/1",
       "headers": []
     }
   ]
 }
-

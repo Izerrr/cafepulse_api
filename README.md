@@ -194,9 +194,12 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
 ### Detail Spesifikasi Request & Response
 
 #### 1. Service Health Check
-- **Endpoint:** `GET /`
-- **Headers:** `Accept: application/json`
-- **Response `200 OK`:**
+- **Method**       : `GET`
+- **URL**          : `https://cafepulse-api.vercel.app/`
+- **Deskripsi**    : Pemeriksaan status operasional service & daftar sitemap endpoint API.
+- **Headers**      : `Accept: application/json`
+- **Request Body** : *(None)*
+- **Response Sukses (200):**
 ```json
 {
   "status": "success",
@@ -214,13 +217,23 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
   }
 }
 ```
+- **Response Error (500):**
+```json
+{
+  "status": "error",
+  "message": "Terjadi kesalahan internal pada server"
+}
+```
 
 ---
 
 #### 2. Supabase Database Check
-- **Endpoint:** `GET /db-check`
-- **Deskripsi:** Menjalankan `SELECT 1` langsung ke PostgreSQL Supabase untuk memvalidasi kredensial dan search path schema `cafepulse`.
-- **Response `200 OK`:**
+- **Method**       : `GET`
+- **URL**          : `https://cafepulse-api.vercel.app/db-check`
+- **Deskripsi**    : Menjalankan validasi koneksi live langsung ke PostgreSQL Supabase (schema `cafepulse`).
+- **Headers**      : `Accept: application/json`
+- **Request Body** : *(None)*
+- **Response Sukses (200):**
 ```json
 {
   "status": "success",
@@ -231,7 +244,7 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
   }
 }
 ```
-- **Response `500 Internal Server Error`:**
+- **Response Error (500):**
 ```json
 {
   "status": "error",
@@ -242,11 +255,15 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
 ---
 
 #### 3. List All Cafes (Read All)
-- **Endpoint:** `GET /api/cafes`
-- **Query Parameters (Opsional):**
-  - `q`: Pencarian nama kafe (misal: `?q=Ruang`)
-  - `crowd_density`: Filter kepadatan (`LOW`, `MODERATE`, `FULL`)
-- **Response `200 OK`:**
+- **Method**       : `GET`
+- **URL**          : `https://cafepulse-api.vercel.app/api/cafes`
+- **Deskripsi**    : Mengambil daftar seluruh kafe beserta relasi fasilitas amenities.
+- **Headers**      : `Accept: application/json`
+- **Query Params** :
+  - `q` (opsional): Pencarian nama kafe (misal: `?q=Ruang`)
+  - `crowd_density` (opsional): Filter kepadatan (`LOW`, `MODERATE`, `FULL`)
+- **Request Body** : *(None)*
+- **Response Sukses (200):**
 ```json
 {
   "status": "success",
@@ -281,12 +298,23 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
   ]
 }
 ```
+- **Response Error (500):**
+```json
+{
+  "status": "error",
+  "message": "Gagal mengambil data kafe: ..."
+}
+```
 
 ---
 
 #### 4. Detail Single Cafe (Read One)
-- **Endpoint:** `GET /api/cafes/<int:cafe_id>`
-- **Response `200 OK`:**
+- **Method**       : `GET`
+- **URL**          : `https://cafepulse-api.vercel.app/api/cafes/1`
+- **Deskripsi**    : Mengambil data lengkap satu kafe berdasarkan ID, termasuk fasilitas amenities dan ulasan reviews.
+- **Headers**      : `Accept: application/json`
+- **Request Body** : *(None)*
+- **Response Sukses (200):**
 ```json
 {
   "status": "success",
@@ -330,7 +358,7 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
   }
 }
 ```
-- **Response `404 Not Found`:**
+- **Response Error (404):**
 ```json
 {
   "status": "error",
@@ -341,9 +369,11 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
 ---
 
 #### 5. Tambah Data Kafe (Create)
-- **Endpoint:** `POST /api/cafes`
-- **Headers:** `Content-Type: application/json`
-- **Request Body:**
+- **Method**       : `POST`
+- **URL**          : `https://cafepulse-api.vercel.app/api/cafes`
+- **Deskripsi**    : Menambahkan entitas kafe baru beserta fasilitas amenities secara transaksional.
+- **Headers**      : `Content-Type: application/json`
+- **Request Body** :
 ```json
 {
   "name": "Kopi Senja Solo",
@@ -363,7 +393,7 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
   }
 }
 ```
-- **Response `201 Created`:**
+- **Response Sukses (201):**
 ```json
 {
   "status": "success",
@@ -396,7 +426,7 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
   }
 }
 ```
-- **Response `400 Bad Request`:**
+- **Response Error (400):**
 ```json
 {
   "status": "error",
@@ -407,59 +437,65 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
 ---
 
 #### 6. Perbarui Data Kafe (Update)
-- **Endpoint:** `PUT /api/cafes/<int:cafe_id>`
-- **Headers:** `Content-Type: application/json`
-- **Request Body:**
+- **Method**       : `PUT`
+- **URL**          : `https://cafepulse-api.vercel.app/api/cafes/1`
+- **Deskripsi**    : Memperbarui informasi profil kafe dan atribut amenities.
+- **Headers**      : `Content-Type: application/json`
+- **Request Body** :
 ```json
 {
-  "name": "Kopi Senja Solo (Renovated)",
+  "name": "Ruang Temu Coffee & Space (Renovated)",
   "crowd_density": "MODERATE",
   "amenities": {
-    "wifi_speed_mbps": 150,
+    "wifi_speed_mbps": 120,
     "noise_level": "MODERATE"
   }
 }
 ```
-- **Response `200 OK`:**
+- **Response Sukses (200):**
 ```json
 {
   "status": "success",
-  "message": "Data kafe dengan ID 3 berhasil diperbarui",
+  "message": "Data kafe dengan ID 1 berhasil diperbarui",
   "data": {
-    "id": 3,
-    "name": "Kopi Senja Solo (Renovated)",
+    "id": 1,
+    "name": "Ruang Temu Coffee & Space (Renovated)",
     "crowd_density": "MODERATE",
     "amenities": {
-      "wifi_speed_mbps": 150,
+      "wifi_speed_mbps": 120,
       "noise_level": "MODERATE"
     }
   }
 }
 ```
-- **Response `404 Not Found`:**
+- **Response Error (404):**
 ```json
 {
   "status": "error",
-  "message": "Kafe dengan ID 3 tidak ditemukan"
+  "message": "Kafe dengan ID 999 tidak ditemukan"
 }
 ```
 
 ---
 
 #### 7. Hapus Data Kafe (Delete)
-- **Endpoint:** `DELETE /api/cafes/<int:cafe_id>`
-- **Response `200 OK`:**
+- **Method**       : `DELETE`
+- **URL**          : `https://cafepulse-api.vercel.app/api/cafes/1`
+- **Deskripsi**    : Menghapus data kafe beserta entitas turunannya (amenities, reviews) secara cascade.
+- **Headers**      : `Accept: application/json`
+- **Request Body** : *(None)*
+- **Response Sukses (200):**
 ```json
 {
   "status": "success",
-  "message": "Kafe 'Kopi Senja Solo (Renovated)' (ID: 3) berhasil dihapus"
+  "message": "Kafe 'Ruang Temu Coffee & Space' (ID: 1) berhasil dihapus"
 }
 ```
-- **Response `404 Not Found`:**
+- **Response Error (404):**
 ```json
 {
   "status": "error",
-  "message": "Kafe dengan ID 3 tidak ditemukan"
+  "message": "Kafe dengan ID 999 tidak ditemukan"
 }
 ```
 
@@ -558,25 +594,25 @@ Proyek ini telah dikonfigurasi untuk deployment ke platform **Vercel** menggunak
 
 ## 7. Panduan Pengujian API (Postman / Thunder Client)
 
-### Pengujian dengan Thunder Client (VS Code)
+Repositori ini sudah menyediakan file koleksi pengujian siap pakai yang langsung mengarah ke URL live Vercel (`https://cafepulse-api.vercel.app`).
+
+### A. Pengujian via Thunder Client (VS Code)
 1. Buka ekstensi **Thunder Client** di VS Code.
-2. Buat Collection baru bernama `CafePulse API`.
-3. Buat Environment Variable:
-   - `base_url`: `http://127.0.0.1:5000` (atau URL Vercel saat live)
-4. Buat Request sesuai daftar berikut:
-   - `GET {{base_url}}/`
-   - `GET {{base_url}}/db-check`
-   - `GET {{base_url}}/api/cafes`
-   - `GET {{base_url}}/api/cafes/1`
-   - `POST {{base_url}}/api/cafes` (Header: `Content-Type: application/json`, masukkan body json kafe baru)
-   - `PUT {{base_url}}/api/cafes/1` (Header: `Content-Type: application/json`)
-   - `DELETE {{base_url}}/api/cafes/1`
+2. Masuk ke tab **Collections** $\rightarrow$ klik tombol menu $(\dots)$ di pojok atas $\rightarrow$ pilih **Import**.
+3. Pilih file [`thunder-collection_cafepulse.json`](thunder-collection_cafepulse.json).
+4. Seluruh request live siap dijalankan dengan 1-klik tanpa perlu mengetik ulang parameter!
+
+### B. Pengujian via Postman
+1. Buka aplikasi **Postman**.
+2. Klik tombol **Import** pada sidebar kiri atas.
+3. Seret (*drag & drop*) atau pilih berkas [`postman_collection_cafepulse.json`](postman_collection_cafepulse.json).
+4. Buka collection `CafePulse API (Vercel Live)` dan klik **Run Collection** atau kirim request satu per satu.
 
 ### Checklist Pengujian Kriteria Kelulusan
-- [x] Database 7 tabel relasional terhubung (1:1, 1:N, N:N via `cafepulse` schema).
-- [x] Full CRUD teruji (GET, POST, PUT, DELETE).
-- [x] Status code HTTP tepat (200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Error).
-- [x] Output response konsisten JSON.
-- [x] Siap deploy serverless di Vercel (`vercel.json` dan WSGI handler di `run.py`).
-- [x] Dokumentasi teknis lengkap dan rapi di `README.md`.
+- [x] **Database Relasional**: Minimal 5 tabel (CafePulse memiliki 7 tabel dengan relasi 1:1, 1:N, dan N:N pivot table).
+- [x] **HTTP Methods Lengkap**: Full CRUD teruji (`GET`, `POST`, `PUT`, `DELETE`).
+- [x] **Status Code Tepat**: `200 OK`, `201 Created`, `400 Bad Request`, `404 Not Found`, `500 Internal Error`.
+- [x] **Live Deployment**: Live di Vercel (`https://cafepulse-api.vercel.app/`) dengan serverless runtime `@vercel/python`.
+- [x] **Pengujian Live**: Collection Thunder Client & Postman tersedia dan terverifikasi pada URL Vercel.
+- [x] **Dokumentasi Lengkap**: ERD Diagram, link deployment, spesifikasi parameter, panduan lokal, dan zero password leak (menggunakan Environment Variables).
 
