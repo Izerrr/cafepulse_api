@@ -6,10 +6,11 @@
 [![Database](https://img.shields.io/badge/database-Supabase%20PostgreSQL-green)](https://supabase.com/)
 [![Deployment](https://img.shields.io/badge/deploy-Vercel%20Serverless-lightgrey)](https://cafepulse-api.vercel.app/)
 
-> **🌐 Live Production URL:** [https://cafepulse-api.vercel.app/](https://cafepulse-api.vercel.app/)  
-> **🏥 Health Check:** [https://cafepulse-api.vercel.app/](https://cafepulse-api.vercel.app/)  
-> **🗄️ Database Check:** [https://cafepulse-api.vercel.app/db-check](https://cafepulse-api.vercel.app/db-check)  
-> **☕ Cafes Resource:** [https://cafepulse-api.vercel.app/api/cafes](https://cafepulse-api.vercel.app/api/cafes)
+> **🌐 Live Production URL (Custom Domain):** [https://api.cafepulse.izerworks.my.id/](https://api.cafepulse.izerworks.my.id/)  
+> **🔗 Fallback Vercel URL:** [https://cafepulse-api.vercel.app/](https://cafepulse-api.vercel.app/)  
+> **🏥 Health Check:** [https://api.cafepulse.izerworks.my.id/](https://api.cafepulse.izerworks.my.id/)  
+> **🗄️ Database Check:** [https://api.cafepulse.izerworks.my.id/db-check](https://api.cafepulse.izerworks.my.id/db-check)  
+> **☕ Cafes Resource:** [https://api.cafepulse.izerworks.my.id/api/cafes](https://api.cafepulse.izerworks.my.id/api/cafes)
 
 RESTful API modular untuk direktori kafe ramah kerja (*work-friendly cafes* & *coworking spaces*) yang dilengkapi dengan metrik kenyamanan kerja (kecepatan Wi-Fi, ketersediaan colokan, tingkat kebisingan), ulasan komunitas, serta fitur pemesanan awal (*pre-order*). Proyek ini dibangun sebagai tugas akhir program **Learning Labs: Backend Development**.
 
