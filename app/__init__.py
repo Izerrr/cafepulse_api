@@ -1,44 +1,53 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from dotenv import load_dotenv
 from app.extensions import db
+from app.routes.main import main_bp
+from app.routes.cafes import cafe_bp
 
 load_dotenv()
 
 def create_app():
     app = Flask(__name__)
 
-    # Konfigurasi Database dari .env
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+    # Konfigurasi Database & Connection Pooling untuk Serverless
+    database_url = os.getenv("DATABASE_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_pre_ping": True,
+        "pool_recycle": 300,
+    }
 
-    # Bind SQLAlchemy ke instance app
+    # Inisialisasi Ekstensi
     db.init_app(app)
 
-    # Endpoint 1: Health check app Flask
-    @app.route("/", methods=["GET"])
-    def index():
-        return {
-            "status": "success",
-            "project": "CafePulse REST API",
-            "message": "Engine Flask backend berhasil berjalan!"
-        }, 200
+    # Registrasi Blueprints
+    app.register_blueprint(main_bp)
+    app.register_blueprint(cafe_bp)
 
-    # Endpoint 2: Health check koneksi ke Supabase PostgreSQL
-    @app.route("/db-check", methods=["GET"])
-    def check_db():
-        try:
-            # Query ping sederhana
-            db.session.execute(db.select(1))
-            return {
-                "status": "success",
-                "database": "Terhubung sempurna ke Supabase PostgreSQL!",
-                "schema": "cafepulse"
-            }, 200
-        except Exception as e:
-            return {
-                "status": "error",
-                "message": f"Koneksi database gagal: {str(e)}"
-            }, 500
+    # Global JSON Error Handlers
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            "status": "error",
+            "message": "Resource atau endpoint tidak ditemukan"
+        }), 404
+
+    @app.errorhandler(405)
+    def method_not_allowed(error):
+        return jsonify({
+            "status": "error",
+            "message": "Metode HTTP tidak diizinkan untuk endpoint ini"
+        }), 405
+
+    @app.errorhandler(500)
+    def internal_server_error(error):
+        return jsonify({
+            "status": "error",
+            "message": "Terjadi kesalahan internal pada server"
+        }), 500
+
+    return app
 
     return app

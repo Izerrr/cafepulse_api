@@ -1,0 +1,71 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "CafePulse API",
+  "collectionId": "cafepulse-collection",
+  "dateExported": "2026-10-24T05:05:00.000Z",
+  "version": "1.1",
+  "folders": [],
+  "requests": [
+    {
+      "name": "1. Health Check",
+      "method": "GET",
+      "url": "http://127.0.0.1:5000/",
+      "headers": []
+    },
+    {
+      "name": "2. Database Connection Check",
+      "method": "GET",
+      "url": "http://127.0.0.1:5000/db-check",
+      "headers": []
+    },
+    {
+      "name": "3. Get All Cafes",
+      "method": "GET",
+      "url": "http://127.0.0.1:5000/api/cafes",
+      "headers": []
+    },
+    {
+      "name": "4. Get Single Cafe by ID",
+      "method": "GET",
+      "url": "http://127.0.0.1:5000/api/cafes/1",
+      "headers": []
+    },
+    {
+      "name": "5. Create New Cafe",
+      "method": "POST",
+      "url": "http://127.0.0.1:5000/api/cafes",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Kopi Senja Solo\",\n  \"address\": \"Jl. Gatot Subroto No. 88, Surakarta\",\n  \"latitude\": -7.568120,\n  \"longitude\": 110.822340,\n  \"opening_hours\": \"07:00 - 23:00\",\n  \"crowd_density\": \"LOW\",\n  \"amenities\": {\n    \"wifi_speed_mbps\": 100,\n    \"wifi_stability\": \"EXCELLENT\",\n    \"plug_score\": \"PLENTY\",\n    \"noise_level\": \"QUIET\",\n    \"has_outdoor\": true,\n    \"has_prayer_room\": true,\n    \"air_conditioned\": true\n  }\n}"
+      }
+    },
+    {
+      "name": "6. Update Cafe",
+      "method": "PUT",
+      "url": "http://127.0.0.1:5000/api/cafes/1",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Ruang Temu Coffee & Space (Updated)\",\n  \"crowd_density\": \"MODERATE\",\n  \"amenities\": {\n    \"wifi_speed_mbps\": 120,\n    \"noise_level\": \"MODERATE\"\n  }\n}"
+      }
+    },
+    {
+      "name": "7. Delete Cafe",
+      "method": "DELETE",
+      "url": "http://127.0.0.1:5000/api/cafes/1",
+      "headers": []
+    }
+  ]
+}
+
