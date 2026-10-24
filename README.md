@@ -187,7 +187,7 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
 | **GET** | `/api/cafes` | Ambil semua data kafe + fasilitas amenities | `200 OK` | `500 Internal Error` |
 | **GET** | `/api/cafes/<id>` | Ambil detail 1 kafe + amenities + ulasan | `200 OK` | `404 Not Found`, `500` |
 | **POST** | `/api/cafes` | Tambah data kafe baru (+ amenities opsional) | `201 Created` | `400 Bad Request`, `500` |
-| **PUT** | `/api/cafes/<id>` | Perbarui data kafe & fasilitas amenities | `200 OK` | `400 Bad Request`, `404`, `500` |
+| **PUT / PATCH** | `/api/cafes/<id>` | Perbarui data kafe & fasilitas amenities | `200 OK` | `400 Bad Request`, `404`, `500` |
 | **DELETE** | `/api/cafes/<id>` | Hapus data kafe (cascade delete) | `200 OK` | `404 Not Found`, `500` |
 
 ---
@@ -438,8 +438,8 @@ Semua respons API disajikan dalam format JSON dengan format status standar:
 ---
 
 #### 6. Perbarui Data Kafe (Update)
-- **Method**       : `PUT`
-- **URL**          : `https://cafepulse-api.vercel.app/api/cafes/1`
+- **Method**       : `PUT` / `PATCH`
+- **URL**          : `https://cafepulse-api.vercel.app/api/cafes/1` (atau `https://api.cafepulse.izerworks.my.id/api/cafes/1`)
 - **Deskripsi**    : Memperbarui informasi profil kafe dan atribut amenities.
 - **Headers**      : `Content-Type: application/json`
 - **Request Body** :

@@ -124,8 +124,8 @@ def create_cafe():
         }), 500
 
 
-# 4. UPDATE (PUT /api/cafes/<int:cafe_id>)
-@cafe_bp.route("/<int:cafe_id>", methods=["PUT"])
+# 4. UPDATE (PUT / PATCH /api/cafes/<int:cafe_id>)
+@cafe_bp.route("/<int:cafe_id>", methods=["PUT", "PATCH"])
 def update_cafe(cafe_id):
     try:
         cafe = db.session.get(Cafe, cafe_id)

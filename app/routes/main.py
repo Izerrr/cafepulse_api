@@ -18,7 +18,7 @@ def index():
             "list_cafes": "GET /api/cafes",
             "cafe_detail": "GET /api/cafes/<int:cafe_id>",
             "create_cafe": "POST /api/cafes",
-            "update_cafe": "PUT /api/cafes/<int:cafe_id>",
+            "update_cafe": "PUT or PATCH /api/cafes/<int:cafe_id>",
             "delete_cafe": "DELETE /api/cafes/<int:cafe_id>"
         }
     }), 200
