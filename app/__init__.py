@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, Response
 from dotenv import load_dotenv
 from app.extensions import db
 from app.routes.main import main_bp
@@ -28,6 +28,23 @@ def create_app():
     # Registrasi Blueprints
     app.register_blueprint(main_bp)
     app.register_blueprint(cafe_bp)
+
+    # CORS Headers (Memungkinkan Frontend di domain lain/localhost memanggil API)
+    @app.before_request
+    def handle_options():
+        if request.method == "OPTIONS":
+            res = Response()
+            res.headers["Access-Control-Allow-Origin"] = "*"
+            res.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            res.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+            return res
+
+    @app.after_request
+    def add_cors_headers(response):
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        return response
 
     # Global JSON Error Handlers
     @app.errorhandler(404)
