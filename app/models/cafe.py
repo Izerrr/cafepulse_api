@@ -233,3 +233,4 @@ class OrderItem(db.Model):
             "subtotal": float(self.subtotal) if self.subtotal is not None else 0.0,
             "notes": self.notes
         }
+    comment = db.Column(db.Text)
