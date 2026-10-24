@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, jsonify
 from app.extensions import db
 from app.models.cafe import Cafe
@@ -24,6 +25,13 @@ def index():
 
 @main_bp.route("/db-check", methods=["GET"])
 def db_check():
+    db_url = os.getenv("DATABASE_URL")
+    if not db_url:
+        return jsonify({
+            "status": "error",
+            "message": "DATABASE_URL belum dikonfigurasi di Environment Variables Vercel! Silakan buka Dashboard Vercel -> Settings -> Environment Variables, tambahkan DATABASE_URL, lalu lakukan Redeploy."
+        }), 500
+
     try:
         # Validasi koneksi langsung ke Supabase
         db.session.execute(db.select(1))

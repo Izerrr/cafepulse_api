@@ -12,12 +12,15 @@ def create_app():
 
     # Konfigurasi Database & Connection Pooling untuk Serverless
     database_url = os.getenv("DATABASE_URL")
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-        "pool_pre_ping": True,
-        "pool_recycle": 300,
-    }
+    if not database_url:
+        print("[WARNING] DATABASE_URL tidak diset! Menggunakan fallback in-memory database.")
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    else:
+        app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+        app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+            "pool_pre_ping": True,
+            "pool_recycle": 300,
+        }
 
     # Inisialisasi Ekstensi
     db.init_app(app)
